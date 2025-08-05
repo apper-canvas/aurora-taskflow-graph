@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
+import { AuthContext } from "@/App";
 import ApperIcon from "@/components/ApperIcon";
 import ProgressRing from "@/components/molecules/ProgressRing";
 import SearchBar from "@/components/molecules/SearchBar";
-
+import Button from "@/components/atoms/Button";
 const Header = ({ 
   totalTasks, 
   completedTasks, 
   onSearch,
   activeFilter 
 }) => {
+  const { logout } = useContext(AuthContext);
   const completionRate = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
   const getFilterTitle = (filter) => {
@@ -78,11 +80,20 @@ const Header = ({
             </div>
           </div>
         </div>
-
-        <div className="flex items-center gap-6">
+<div className="flex items-center gap-6">
           <div className="w-full lg:w-80">
             <SearchBar onSearch={onSearch} />
           </div>
+          
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={logout}
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
+          >
+            <ApperIcon name="LogOut" className="w-4 h-4" />
+            <span className="hidden sm:inline">Logout</span>
+          </Button>
           
           <motion.div
             whileHover={{ scale: 1.05 }}
@@ -98,7 +109,7 @@ const Header = ({
               </div>
             </div>
           </motion.div>
-        </div>
+</div>
       </div>
 
       {/* Mobile Stats */}
